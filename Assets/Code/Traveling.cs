@@ -8,6 +8,8 @@ public class Traveling : MonoBehaviour
     [SerializeField]
     List<Checkpoint> myCheckpoints;
 
+    float[,] distances;
+
     NavMeshAgent myNavMeshAgent;
     int currentCheckpointIndex;
     bool traveling;
@@ -15,6 +17,9 @@ public class Traveling : MonoBehaviour
     public void Start()
     {
         myNavMeshAgent = this.GetComponent<NavMeshAgent>();
+
+        ComputeDistances();
+
 
         if (myNavMeshAgent == null)
         {
@@ -66,6 +71,21 @@ public class Traveling : MonoBehaviour
         if (currentCheckpointIndex >= myCheckpoints.Count)
         {
             myNavMeshAgent.isStopped = true;
+        }
+    }
+
+    private void ComputeDistances()
+    {
+        distances = new float[myCheckpoints.Count, myCheckpoints.Count];
+
+        for (int i=0; i<myCheckpoints.Count; i++)
+        {
+            for (int j = 0; j < myCheckpoints.Count; j++)
+            {
+                if (i == j) continue;
+
+                distances[i, j] = Vector3.Distance(myCheckpoints[i].transform.position, myCheckpoints[j].transform.position);
+            }
         }
     }
 
