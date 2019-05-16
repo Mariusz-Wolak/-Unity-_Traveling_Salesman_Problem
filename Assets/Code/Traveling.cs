@@ -8,18 +8,26 @@ public class Traveling : MonoBehaviour
     [SerializeField]
     List<Checkpoint> myCheckpoints;
 
-    float[,] distances;
+    // float[,] distances;
+
+
+    List<int> remainingCheckpoints = new List<int>();
+    List<int> finalShortest = new List<int>();
+    List<int> currentShortest = new List<int>();
+    List<int> currentLoopShortest = new List<int>();
 
     NavMeshAgent myNavMeshAgent;
     int currentCheckpointIndex;
+    int finalShortestIndexer = 0;
     bool traveling;
 
     public void Start()
     {
+        Heuristic();
+        Debug.Log("Final Shortest is: ");
+        foreach(int ele in finalShortest) Debug.Log(ele);
+
         myNavMeshAgent = this.GetComponent<NavMeshAgent>();
-
-        ComputeDistances();
-
 
         if (myNavMeshAgent == null)
         {
@@ -45,10 +53,9 @@ public class Traveling : MonoBehaviour
         {
             traveling = false;
 
-            NextCheckpoint();
-
             if (!myNavMeshAgent.isStopped)
             {
+                NextCheckpoint();
                 SetDestination();
             }
         }
@@ -66,28 +73,80 @@ public class Traveling : MonoBehaviour
 
     private void NextCheckpoint()
     {
-        currentCheckpointIndex++;
+        finalShortestIndexer++;
 
-        if (currentCheckpointIndex >= myCheckpoints.Count)
+        if (finalShortestIndexer - 1 > myCheckpoints.Count) //final shortest path has 1 more element than Checkpoints, because we go back
         {
             myNavMeshAgent.isStopped = true;
         }
-    }
-
-    private void ComputeDistances()
-    {
-        distances = new float[myCheckpoints.Count, myCheckpoints.Count];
-
-        for (int i=0; i<myCheckpoints.Count; i++)
+        else if (finalShortestIndexer == myCheckpoints.Count+1) // if about to go to the last Checkpoint, go to Checkpoint[0]
         {
-            for (int j = 0; j < myCheckpoints.Count; j++)
-            {
-                if (i == j) continue;
-
-                distances[i, j] = Vector3.Distance(myCheckpoints[i].transform.position, myCheckpoints[j].transform.position);
-            }
+            currentCheckpointIndex = 0;
+        }
+        else
+        {
+            currentCheckpointIndex = finalShortest[finalShortestIndexer];
         }
     }
 
+    //private void ComputeDistances()
+    //{
+    //    distances = new float[myCheckpoints.Count, myCheckpoints.Count];
+
+    //    for (int i=0; i<myCheckpoints.Count; i++)
+    //    {
+    //        for (int j = 0; j < myCheckpoints.Count; j++)
+    //        {
+    //            if (i == j) continue;
+
+    //            distances[i, j] = Vector3.Distance(myCheckpoints[i].transform.position, myCheckpoints[j].transform.position);
+    //        }
+    //    }
+    //}
+
+    private double ComputeDistance(List<int> myList)
+    {
+        double distance = 0;
+
+        for(int i=0; i<myList.Count-1; i++) //10 elements: 0-9, index [8] goes to [9] and we stop there
+        {
+            distance += Vector3.Distance(myCheckpoints[myList[i]].transform.position, myCheckpoints[myList[i+1]].transform.position);
+        }
+
+        return distance;
+    }
+
+    private void Heuristic()
+    {
+        for (int i=1; i<myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set below
+        {
+            remainingCheckpoints.Add(i);
+        }
+
+        int startIndex = 0;
+
+        finalShortest.Add(startIndex);
+        finalShortest.Add(startIndex);
+
+        currentShortest.AddRange(finalShortest);
+
+        System.Random random = new System.Random();
+
+        while (finalShortest.Count <= myCheckpoints.Count) // because we have to go back, so finalShortest has 1 more Checkpoints than all Checkpoints
+        {
+            int randomIndex = random.Next(0, remainingCheckpoints.Count);
+            currentShortest.Insert(1, remainingCheckpoints[randomIndex]);
+            for (int i=2; i<finalShortest.Count; i++)
+            {
+                currentLoopShortest.Clear();
+                currentLoopShortest.AddRange(finalShortest);
+                currentLoopShortest.Insert(i, remainingCheckpoints[randomIndex]);
+                if (ComputeDistance(currentLoopShortest) < ComputeDistance(currentShortest)) currentShortest = currentLoopShortest;
+            }
+            finalShortest.Clear();
+            finalShortest.AddRange(currentShortest);
+            remainingCheckpoints.RemoveAt(randomIndex);
+        }
+    }
 }
 
