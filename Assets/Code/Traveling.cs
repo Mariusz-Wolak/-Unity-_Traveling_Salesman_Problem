@@ -73,11 +73,19 @@ public class Traveling : MonoBehaviour
 
     private void NextCheckpoint()
     {
-        currentCheckpointIndex++;
+        finalShortestIndexer++;
 
-        if (currentCheckpointIndex >= myCheckpoints.Count)
+        if (finalShortestIndexer - 1 > myCheckpoints.Count) //final shortest path has 1 more element than Checkpoints, because we go back
         {
             myNavMeshAgent.isStopped = true;
+        }
+        else if (finalShortestIndexer == myCheckpoints.Count+1) // if about to go to the last Checkpoint, go to Checkpoint[0]
+        {
+            currentCheckpointIndex = 0;
+        }
+        else
+        {
+            currentCheckpointIndex = finalShortest[finalShortestIndexer];
         }
     }
 
