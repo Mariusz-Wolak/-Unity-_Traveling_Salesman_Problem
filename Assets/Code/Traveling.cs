@@ -53,10 +53,9 @@ public class Traveling : MonoBehaviour
         {
             traveling = false;
 
-            NextCheckpoint();
-
             if (!myNavMeshAgent.isStopped)
             {
+                NextCheckpoint();
                 SetDestination();
             }
         }
