@@ -8,18 +8,26 @@ public class Traveling : MonoBehaviour
     [SerializeField]
     List<Checkpoint> myCheckpoints;
 
-    float[,] distances;
+    // float[,] distances;
+
+
+    List<int> remainingCheckpoints = new List<int>();
+    List<int> finalShortest = new List<int>();
+    List<int> currentShortest = new List<int>();
+    List<int> currentLoopShortest = new List<int>();
 
     NavMeshAgent myNavMeshAgent;
     int currentCheckpointIndex;
+    int finalShortestIndexer = 0;
     bool traveling;
 
     public void Start()
     {
+        Heuristic();
+        Debug.Log("Final Shortest is: ");
+        foreach(int ele in finalShortest) Debug.Log(ele);
+
         myNavMeshAgent = this.GetComponent<NavMeshAgent>();
-
-        ComputeDistances();
-
 
         if (myNavMeshAgent == null)
         {
