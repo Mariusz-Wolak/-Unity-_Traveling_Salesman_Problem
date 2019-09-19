@@ -1,14 +1,22 @@
-﻿using System.Collections;
+﻿using Common;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Traveling : MonoBehaviour
 {
-    [SerializeField]
-    List<Checkpoint> myCheckpoints;
+    public Text walkingText;
+    private float startTime;
+    string minutes = "";
+    string seconds = "";
 
-    // float[,] distances;
+    public Text ComputingText;
+    public Text DistanceText;
+    public Text algorithmText;
+    public Text checkpointsText;
 
 
     List<int> remainingCheckpoints = new List<int>();
