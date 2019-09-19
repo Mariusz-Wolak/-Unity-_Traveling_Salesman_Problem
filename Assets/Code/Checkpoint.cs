@@ -6,7 +6,7 @@ public class Checkpoint : MonoBehaviour
 {
     public virtual void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 1.0F);
     }
 }
