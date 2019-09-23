@@ -6,28 +6,33 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    List<string> algorithms = new List<string>() { "Insertion", "Brute-force", "Random checkpoints" };
-    List<string> checkpoints = new List<string>() { "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
-    public Dropdown checkpointsDropdown;
-    public Dropdown algorithmDropdown;
     public static string algorithmName;
     public static string checkpointsAmount;
+    private List<string> _algorithms = new List<string>() { "Insertion", "Brute-force", "Random checkpoints" };
+    private List<string> _checkpoints = new List<string>() { "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
 
-    void Start()
+    [SerializeField]
+    private Dropdown _algorithmDropdown;
+
+    [SerializeField]
+    private Dropdown _checkpointsDropdown;
+    
+
+    private void Start()
     {
-        algorithmDropdown.AddOptions(algorithms);
-        checkpointsDropdown.AddOptions(checkpoints);
+        _algorithmDropdown.AddOptions(_algorithms);
+        _checkpointsDropdown.AddOptions(_checkpoints);
     }
 
-    public void dropdownAlgorithm_IndexChanged(int index)
+    public void DropdownAlgorithm_IndexChanged(int index)
     {
-        algorithmName = algorithms[index];
+        algorithmName = _algorithms[index];
         Debug.Log(algorithmName);
     }
 
-    public void dropdownCheckpoints_IndexChanged(int index)
+    public void DropdownCheckpoints_IndexChanged(int index)
     {
-        checkpointsAmount = checkpoints[index];
+        checkpointsAmount = _checkpoints[index];
         Debug.Log(checkpointsAmount);
     }
 
