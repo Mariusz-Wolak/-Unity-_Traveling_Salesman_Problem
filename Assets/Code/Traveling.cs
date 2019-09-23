@@ -92,9 +92,31 @@ public class Traveling : MonoBehaviour
 
     public void Update()
     {
-        if (traveling && myNavMeshAgent.remainingDistance <= 2.0f)
+        float t = Time.time - _startTime;
+        if (((int)t / 60) < 10)
         {
-            traveling = false;
+            _minutes = "0" + ((int)t / 60).ToString();
+        }
+        else
+        {
+            _minutes = ((int)t / 60).ToString();
+        }
+        
+        if((t % 60) < 10)
+        {
+            _seconds = "0" + (t % 60).ToString("f2");
+        }
+        else
+        {
+            _seconds = (t % 60).ToString("f2");
+        }
+        
+        if (_isTraveling) _walkingText.text = "Walking: \n" + _minutes + ":" + _seconds;
+
+
+        if (_isTraveling && _myNavMeshAgent.remainingDistance <= 2.0f)
+        {
+            _isTraveling = false;
 
             if (!myNavMeshAgent.isStopped)
             {
