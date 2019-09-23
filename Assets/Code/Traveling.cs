@@ -18,10 +18,20 @@ public class Traveling : MonoBehaviour
     [SerializeField]
     private Text _DistanceText;
 
-    List<int> remainingCheckpoints = new List<int>();
-    List<int> finalShortest = new List<int>();
-    List<int> currentShortest = new List<int>();
-    List<int> currentLoopShortest = new List<int>();
+    [SerializeField]
+    private Text _algorithmText;
+
+    [SerializeField]
+    private Text _checkpointsText;
+
+    private float _startTime;
+    private string _minutes = "";
+    private string _seconds = "";
+
+    [SerializeField]
+    private List<Checkpoint> _myCheckpoints;
+
+    private List<int> _finalShortest = new List<int>();
 
     NavMeshAgent myNavMeshAgent;
     int currentCheckpointIndex;
