@@ -166,17 +166,23 @@ public class Traveling : MonoBehaviour
         return distance;
     }
 
-    private void Heuristic()
+    private void Insertion()
     {
-        for (int i=1; i<myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set below
+        //algorithmText.text = "INSERTION ALGORITHM";
+
+        List<int> remainingCheckpoints = new List<int>();
+        List<int> currentShortest = new List<int>();
+        List<int> currentLoopShortest = new List<int>();
+        int startIndex = 0;
+        double totalDistance;
+        System.Random random = new System.Random();
+
+        for (int i = 1; i < _myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set below
         {
             remainingCheckpoints.Add(i);
         }
 
-        int startIndex = 0;
-
-        finalShortest.Add(startIndex);
-        finalShortest.Add(startIndex);
+        _finalShortest = new List<int>();
 
         currentShortest.AddRange(finalShortest);
 
