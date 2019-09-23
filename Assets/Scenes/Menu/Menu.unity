@@ -375,7 +375,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 910529313}
-        m_MethodName: dropdownCheckpoints_IndexChanged
+        m_MethodName: DropdownCheckpoints_IndexChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -645,7 +645,7 @@ RectTransform:
   - {fileID: 1988463051}
   - {fileID: 910529312}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -949,7 +949,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &833814483
 GameObject:
@@ -1084,11 +1084,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f82516373bbc244b27f9a74dbde880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointsDropdown: {fileID: 121649410}
-  algorithmDropdown: {fileID: 1574676791}
-  algorithmName: 
-  checkpointsAmount: 
-  traveling: {fileID: 0}
+  _algorithmDropdown: {fileID: 1574676791}
+  _checkpointsDropdown: {fileID: 121649410}
 --- !u!1 &977154951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,9 +1310,9 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 16
+    m_MaxSize: 20
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2070,7 +2067,7 @@ RectTransform:
   m_GameObject: {fileID: 1574676789}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3307, y: 1.3307, z: 1.3307}
+  m_LocalScale: {x: 1.3307, y: 1.5432397, z: 1.3307}
   m_Children:
   - {fileID: 1200387291}
   - {fileID: 977154952}
@@ -2135,7 +2132,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 910529313}
-        m_MethodName: dropdownAlgorithm_IndexChanged
+        m_MethodName: DropdownAlgorithm_IndexChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3022,41 +3019,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894846176}
   m_CullTransparentMesh: 0
---- !u!1 &1911323437
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1911323439}
-  m_Layer: 5
-  m_Name: DropdownController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1911323439
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911323437}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 739, y: 245}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1944637150
 GameObject:
   m_ObjectHideFlags: 0
