@@ -40,9 +40,15 @@ public class Traveling : MonoBehaviour
 
     public void Start()
     {
-        Heuristic();
-        Debug.Log("Final Shortest is: ");
-        foreach(int ele in finalShortest) Debug.Log(ele);
+        _checkpointsText.text = "Checkpoints:\n" + MainMenu.checkpointsAmount;
+        _algorithmText.text = MainMenu.algorithmName.ToUpper();
+        _startTime = Time.time;
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Insertion();
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        string computingMinutes;
+        string computingSeconds;
 
         myNavMeshAgent = this.GetComponent<NavMeshAgent>();
 
