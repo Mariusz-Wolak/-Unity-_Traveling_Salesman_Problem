@@ -184,23 +184,24 @@ public class Traveling : MonoBehaviour
 
         _finalShortest = new List<int>();
 
-        currentShortest.AddRange(finalShortest);
+        _finalShortest.Add(startIndex);
+        _finalShortest.Add(startIndex);
 
-        System.Random random = new System.Random();
+        currentShortest.AddRange(_finalShortest);
 
-        while (finalShortest.Count <= myCheckpoints.Count) // because we have to go back, so finalShortest has 1 more Checkpoints than all Checkpoints
+        while (_finalShortest.Count <= _myCheckpoints.Count) // because we have to go back, so finalShortest has 1 more Checkpoints than all Checkpoints
         {
             int randomIndex = random.Next(0, remainingCheckpoints.Count);
             currentShortest.Insert(1, remainingCheckpoints[randomIndex]);
-            for (int i=2; i<finalShortest.Count; i++)
+            for (int i = 2; i < _finalShortest.Count; i++)
             {
                 currentLoopShortest.Clear();
-                currentLoopShortest.AddRange(finalShortest);
+                currentLoopShortest.AddRange(_finalShortest);
                 currentLoopShortest.Insert(i, remainingCheckpoints[randomIndex]);
                 if (ComputeDistance(currentLoopShortest) < ComputeDistance(currentShortest)) currentShortest = currentLoopShortest;
             }
-            finalShortest.Clear();
-            finalShortest.AddRange(currentShortest);
+            _finalShortest.Clear();
+            _finalShortest.AddRange(currentShortest);
             remainingCheckpoints.RemoveAt(randomIndex);
         }
     }
