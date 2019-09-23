@@ -9,16 +9,14 @@ using UnityEngine.UI;
 
 public class Traveling : MonoBehaviour
 {
-    public Text walkingText;
-    private float startTime;
-    string minutes = "";
-    string seconds = "";
+    [SerializeField]
+    private Text _walkingText;
 
-    public Text ComputingText;
-    public Text DistanceText;
-    public Text algorithmText;
-    public Text checkpointsText;
+    [SerializeField]
+    private Text _ComputingText;
 
+    [SerializeField]
+    private Text _DistanceText;
 
     List<int> remainingCheckpoints = new List<int>();
     List<int> finalShortest = new List<int>();
