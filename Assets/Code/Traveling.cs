@@ -44,7 +44,7 @@ public class Traveling : MonoBehaviour
         _algorithmText.text = MainMenu.algorithmName.ToUpper();
         _startTime = Time.time;
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        Insertion();
+        RandomCheckpoints();
         watch.Stop();
         var elapsedMs = watch.ElapsedMilliseconds;
         string computingMinutes;
@@ -292,6 +292,34 @@ public class Traveling : MonoBehaviour
 
         totalDistance = ComputeDistance(_finalShortest);
         
+        _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
+    }
+
+    private void RandomCheckpoints()
+    {
+        List<int> remainingCheckpoints = new List<int>();
+        int startIndex = 0;
+        double totalDistance;
+        System.Random random = new System.Random();
+        int randomIndex;
+
+        for (int i = 1; i < _myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set
+        {
+            remainingCheckpoints.Add(i);
+        }
+
+        _finalShortest = new List<int>();
+        _finalShortest.Add(startIndex);
+        
+        while (_finalShortest.Count < _myCheckpoints.Count)
+        {
+            randomIndex = random.Next(0, remainingCheckpoints.Count);
+            _finalShortest.Add(remainingCheckpoints[randomIndex]);
+            remainingCheckpoints.RemoveAt(randomIndex);
+        }
+
+        _finalShortest.Add(startIndex);
+        totalDistance = ComputeDistance(_finalShortest);
         _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
     }
 }
