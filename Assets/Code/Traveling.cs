@@ -59,7 +59,20 @@ public class Traveling : MonoBehaviour
             computingMinutes = ((elapsedMs / 1000) / 60).ToString();
         }
 
-        if (myNavMeshAgent == null)
+        if ((elapsedMs / 1000) < 10)
+        {
+            computingSeconds = "0" + (((elapsedMs / 1000)) % 60).ToString("f2");
+        }
+        else
+        {
+            computingSeconds = (((elapsedMs / 1000)) % 60).ToString("f2");
+        }
+
+        _ComputingText.text = "Computed in: \n" + computingMinutes + ":" + computingSeconds;
+
+        _myNavMeshAgent = this.GetComponent<NavMeshAgent>();
+
+        if (_myNavMeshAgent == null)
         {
             Debug.LogError("NavMeshAgent component isn't attached to " + gameObject.name);
         }
