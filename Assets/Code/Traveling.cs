@@ -33,12 +33,12 @@ public class Traveling : MonoBehaviour
 
     private List<int> _finalShortest = new List<int>();
 
-    NavMeshAgent myNavMeshAgent;
-    int currentCheckpointIndex;
-    int finalShortestIndexer = 0;
-    bool traveling;
+    private NavMeshAgent _myNavMeshAgent;
+    private int _currentCheckpointIndex;
+    private int _finalShortestIndexer = 0;
+    private bool _isTraveling;
 
-    public void Start()
+    private void Start()
     {
         _checkpointsText.text = "Checkpoints:\n" + MainMenu.checkpointsAmount;
         _algorithmText.text = MainMenu.algorithmName.ToUpper();
@@ -78,10 +78,10 @@ public class Traveling : MonoBehaviour
         }
         else
         {
-            if (myCheckpoints != null && myCheckpoints.Count >= 2)
+            if (_myCheckpoints != null && _myCheckpoints.Count >= 2)
             {
-                currentCheckpointIndex = 0;
-                SetDestination();
+                _currentCheckpointIndex = 0;
+                MySetDestination();
             }
             else
             {
@@ -90,7 +90,7 @@ public class Traveling : MonoBehaviour
         }
     }
 
-    public void Update()
+    private void Update()
     {
         float t = Time.time - _startTime;
         if (((int)t / 60) < 10)
@@ -118,100 +118,183 @@ public class Traveling : MonoBehaviour
         {
             _isTraveling = false;
 
-            if (!myNavMeshAgent.isStopped)
+            if (!_myNavMeshAgent.isStopped)
             {
                 NextCheckpoint();
-                SetDestination();
+                MySetDestination();
             }
         }
     }
 
-    private void SetDestination()
+    private void MySetDestination()
     {
-        if (myCheckpoints != null)
+        if (_myCheckpoints != null)
         {
-            Vector3 targetVector = myCheckpoints[currentCheckpointIndex].transform.position;
-            myNavMeshAgent.SetDestination(targetVector);
-            traveling = true;
+            Vector3 targetVector = _myCheckpoints[_currentCheckpointIndex].transform.position;
+            _myNavMeshAgent.SetDestination(targetVector);
+            _isTraveling = true;
         }
     }
 
     private void NextCheckpoint()
     {
-        finalShortestIndexer++;
+        _finalShortestIndexer++;
 
-        if (finalShortestIndexer - 1 > myCheckpoints.Count) //final shortest path has 1 more element than Checkpoints, because we go back
+        if (_finalShortestIndexer - 1 > _myCheckpoints.Count) //final shortest path has 1 more element than Checkpoints, because we go back
         {
-            myNavMeshAgent.isStopped = true;
+            _myNavMeshAgent.isStopped = true;
         }
-        else if (finalShortestIndexer == myCheckpoints.Count+1) // if about to go to the last Checkpoint, go to Checkpoint[0]
+        else if (_finalShortestIndexer == _myCheckpoints.Count + 1) // if about to go to the last Checkpoint, go to Checkpoint[0]
         {
-            currentCheckpointIndex = 0;
+            _currentCheckpointIndex = 0;
         }
         else
         {
-            currentCheckpointIndex = finalShortest[finalShortestIndexer];
+            _currentCheckpointIndex = _finalShortest[_finalShortestIndexer];
         }
     }
-
-    //private void ComputeDistances()
-    //{
-    //    distances = new float[myCheckpoints.Count, myCheckpoints.Count];
-
-    //    for (int i=0; i<myCheckpoints.Count; i++)
-    //    {
-    //        for (int j = 0; j < myCheckpoints.Count; j++)
-    //        {
-    //            if (i == j) continue;
-
-    //            distances[i, j] = Vector3.Distance(myCheckpoints[i].transform.position, myCheckpoints[j].transform.position);
-    //        }
-    //    }
-    //}
 
     private double ComputeDistance(List<int> myList)
     {
         double distance = 0;
 
-        for(int i=0; i<myList.Count-1; i++) //10 elements: 0-9, index [8] goes to [9] and we stop there
+        for (int i = 0; i < myList.Count - 1; i++) //10 elements: 0-9, index [8] goes to [9] and we stop there
         {
-            distance += Vector3.Distance(myCheckpoints[myList[i]].transform.position, myCheckpoints[myList[i+1]].transform.position);
+            distance += Vector3.Distance(_myCheckpoints[myList[i]].transform.position, _myCheckpoints[myList[i + 1]].transform.position);
         }
 
         return distance;
     }
 
-    private void Heuristic()
+    private void Insertion()
     {
-        for (int i=1; i<myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set below
+        //algorithmText.text = "INSERTION ALGORITHM";
+
+        List<int> remainingCheckpoints = new List<int>();
+        List<int> currentShortest = new List<int>();
+        List<int> currentLoopShortest = new List<int>();
+        int startIndex = 0;
+        double totalDistance;
+        System.Random random = new System.Random();
+
+        for (int i = 1; i < _myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set below
         {
             remainingCheckpoints.Add(i);
         }
 
-        int startIndex = 0;
+        _finalShortest = new List<int>();
 
-        finalShortest.Add(startIndex);
-        finalShortest.Add(startIndex);
+        _finalShortest.Add(startIndex);
+        _finalShortest.Add(startIndex);
 
-        currentShortest.AddRange(finalShortest);
+        currentShortest.AddRange(_finalShortest);
 
-        System.Random random = new System.Random();
-
-        while (finalShortest.Count <= myCheckpoints.Count) // because we have to go back, so finalShortest has 1 more Checkpoints than all Checkpoints
+        while (_finalShortest.Count <= _myCheckpoints.Count) // because we have to go back, so finalShortest has 1 more Checkpoints than all Checkpoints
         {
             int randomIndex = random.Next(0, remainingCheckpoints.Count);
             currentShortest.Insert(1, remainingCheckpoints[randomIndex]);
-            for (int i=2; i<finalShortest.Count; i++)
+            for (int i = 2; i < _finalShortest.Count; i++)
             {
                 currentLoopShortest.Clear();
-                currentLoopShortest.AddRange(finalShortest);
+                currentLoopShortest.AddRange(_finalShortest);
                 currentLoopShortest.Insert(i, remainingCheckpoints[randomIndex]);
                 if (ComputeDistance(currentLoopShortest) < ComputeDistance(currentShortest)) currentShortest = currentLoopShortest;
             }
-            finalShortest.Clear();
-            finalShortest.AddRange(currentShortest);
+            _finalShortest.Clear();
+            _finalShortest.AddRange(currentShortest);
             remainingCheckpoints.RemoveAt(randomIndex);
         }
+
+        totalDistance = ComputeDistance(_finalShortest);
+
+        _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
+    }
+     
+    public static void RotateRight(IList sequence, int count)
+    {
+        object tmp = sequence[count - 1];
+        sequence.RemoveAt(count - 1);
+        sequence.Insert(0, tmp);
+    }
+
+    public static IEnumerable<IList> Permutate(IList sequence, int count)
+    {
+        if (count == 1) yield return sequence;
+        else
+        {
+            for (int i = 0; i < count; i++)
+            {
+                foreach (var perm in Permutate(sequence, count - 1))
+                    yield return perm;
+                RotateRight(sequence, count);
+            }
+        }
+    }
+
+    public int Factorial(int n)
+    {
+        if (n == 0)
+            return 1;
+        else
+            return n * Factorial(n - 1);
+    }
+
+    private void Bruteforce()
+    {
+        _algorithmText.text = "BRUTE-FORCE ALGORITHM";
+
+        _finalShortest = new List<int>();
+        List<int> listToPermute = new List<int>();
+        int permutationsNumber;
+        List<int>[] permutationsArray;
+        List<int> singlePermutationList = new List<int>();
+        int tour = 0;
+        double totalDistance;
+
+        #region PERMUTATION
+
+        for (int i = 1; i < _myCheckpoints.Count; i++)
+        {
+            listToPermute.Add(i);
+        }
+
+        permutationsNumber = Factorial(listToPermute.Count);
+        permutationsArray = new List<int>[permutationsNumber];
+ 
+        foreach (var permu in Permutate(listToPermute, listToPermute.Count))
+        {
+            foreach (var i in permu)
+            {
+                //Debug.Log($"Checkpoint >{i}< dodajemy do tempList");
+                singlePermutationList.Add((int)i);
+            }
+            
+            permutationsArray[tour] = new List<int>();
+            permutationsArray[tour].Add(0);
+            permutationsArray[tour].AddRange(singlePermutationList);
+            permutationsArray[tour].Add(0);
+            singlePermutationList.Clear();
+            tour++;
+        }
+
+        #endregion
+
+        _finalShortest.AddRange(permutationsArray[0]);
+
+        foreach(List<int> list in permutationsArray)
+        {
+            if (ComputeDistance(list) < ComputeDistance(_finalShortest))
+            {
+                _finalShortest.Clear();
+                _finalShortest.AddRange(list);
+            }
+        }
+
+        totalDistance = ComputeDistance(_finalShortest);
+        
+        _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
     }
 }
+
+    
 
