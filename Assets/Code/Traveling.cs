@@ -1,20 +1,37 @@
-﻿using System.Collections;
+﻿using Common;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Traveling : MonoBehaviour
 {
     [SerializeField]
-    List<Checkpoint> myCheckpoints;
+    private Text _walkingText;
 
-    // float[,] distances;
+    [SerializeField]
+    private Text _ComputingText;
 
+    [SerializeField]
+    private Text _DistanceText;
 
-    List<int> remainingCheckpoints = new List<int>();
-    List<int> finalShortest = new List<int>();
-    List<int> currentShortest = new List<int>();
-    List<int> currentLoopShortest = new List<int>();
+    [SerializeField]
+    private Text _algorithmText;
+
+    [SerializeField]
+    private Text _checkpointsText;
+
+    private float _startTime;
+    private string _minutes = "";
+    private string _seconds = "";
+
+    [SerializeField]
+    private List<Checkpoint> _myCheckpoints;
+
+    private List<int> _finalShortest = new List<int>();
 
     NavMeshAgent myNavMeshAgent;
     int currentCheckpointIndex;
@@ -23,13 +40,39 @@ public class Traveling : MonoBehaviour
 
     public void Start()
     {
-        Heuristic();
-        Debug.Log("Final Shortest is: ");
-        foreach(int ele in finalShortest) Debug.Log(ele);
+        _checkpointsText.text = "Checkpoints:\n" + MainMenu.checkpointsAmount;
+        _algorithmText.text = MainMenu.algorithmName.ToUpper();
+        _startTime = Time.time;
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Insertion();
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        string computingMinutes;
+        string computingSeconds;
 
-        myNavMeshAgent = this.GetComponent<NavMeshAgent>();
+        if ((elapsedMs / 1000) / 60 < 10)
+        {
+            computingMinutes = "0" + ((elapsedMs / 1000) / 60).ToString();
+        }
+        else
+        {
+            computingMinutes = ((elapsedMs / 1000) / 60).ToString();
+        }
 
-        if (myNavMeshAgent == null)
+        if ((elapsedMs / 1000) < 10)
+        {
+            computingSeconds = "0" + (((elapsedMs / 1000)) % 60).ToString("f2");
+        }
+        else
+        {
+            computingSeconds = (((elapsedMs / 1000)) % 60).ToString("f2");
+        }
+
+        _ComputingText.text = "Computed in: \n" + computingMinutes + ":" + computingSeconds;
+
+        _myNavMeshAgent = this.GetComponent<NavMeshAgent>();
+
+        if (_myNavMeshAgent == null)
         {
             Debug.LogError("NavMeshAgent component isn't attached to " + gameObject.name);
         }
@@ -49,9 +92,31 @@ public class Traveling : MonoBehaviour
 
     public void Update()
     {
-        if (traveling && myNavMeshAgent.remainingDistance <= 2.0f)
+        float t = Time.time - _startTime;
+        if (((int)t / 60) < 10)
         {
-            traveling = false;
+            _minutes = "0" + ((int)t / 60).ToString();
+        }
+        else
+        {
+            _minutes = ((int)t / 60).ToString();
+        }
+        
+        if((t % 60) < 10)
+        {
+            _seconds = "0" + (t % 60).ToString("f2");
+        }
+        else
+        {
+            _seconds = (t % 60).ToString("f2");
+        }
+        
+        if (_isTraveling) _walkingText.text = "Walking: \n" + _minutes + ":" + _seconds;
+
+
+        if (_isTraveling && _myNavMeshAgent.remainingDistance <= 2.0f)
+        {
+            _isTraveling = false;
 
             if (!myNavMeshAgent.isStopped)
             {
