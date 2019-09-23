@@ -50,7 +50,14 @@ public class Traveling : MonoBehaviour
         string computingMinutes;
         string computingSeconds;
 
-        myNavMeshAgent = this.GetComponent<NavMeshAgent>();
+        if ((elapsedMs / 1000) / 60 < 10)
+        {
+            computingMinutes = "0" + ((elapsedMs / 1000) / 60).ToString();
+        }
+        else
+        {
+            computingMinutes = ((elapsedMs / 1000) / 60).ToString();
+        }
 
         if (myNavMeshAgent == null)
         {
