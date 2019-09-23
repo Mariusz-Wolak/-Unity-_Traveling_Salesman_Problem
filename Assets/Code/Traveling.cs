@@ -204,6 +204,97 @@ public class Traveling : MonoBehaviour
             _finalShortest.AddRange(currentShortest);
             remainingCheckpoints.RemoveAt(randomIndex);
         }
+
+        totalDistance = ComputeDistance(_finalShortest);
+
+        _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
+    }
+     
+    public static void RotateRight(IList sequence, int count)
+    {
+        object tmp = sequence[count - 1];
+        sequence.RemoveAt(count - 1);
+        sequence.Insert(0, tmp);
+    }
+
+    public static IEnumerable<IList> Permutate(IList sequence, int count)
+    {
+        if (count == 1) yield return sequence;
+        else
+        {
+            for (int i = 0; i < count; i++)
+            {
+                foreach (var perm in Permutate(sequence, count - 1))
+                    yield return perm;
+                RotateRight(sequence, count);
+            }
+        }
+    }
+
+    public int Factorial(int n)
+    {
+        if (n == 0)
+            return 1;
+        else
+            return n * Factorial(n - 1);
+    }
+
+    private void Bruteforce()
+    {
+        _algorithmText.text = "BRUTE-FORCE ALGORITHM";
+
+        _finalShortest = new List<int>();
+        List<int> listToPermute = new List<int>();
+        int permutationsNumber;
+        List<int>[] permutationsArray;
+        List<int> singlePermutationList = new List<int>();
+        int tour = 0;
+        double totalDistance;
+
+        #region PERMUTATION
+
+        for (int i = 1; i < _myCheckpoints.Count; i++)
+        {
+            listToPermute.Add(i);
+        }
+
+        permutationsNumber = Factorial(listToPermute.Count);
+        permutationsArray = new List<int>[permutationsNumber];
+ 
+        foreach (var permu in Permutate(listToPermute, listToPermute.Count))
+        {
+            foreach (var i in permu)
+            {
+                //Debug.Log($"Checkpoint >{i}< dodajemy do tempList");
+                singlePermutationList.Add((int)i);
+            }
+            
+            permutationsArray[tour] = new List<int>();
+            permutationsArray[tour].Add(0);
+            permutationsArray[tour].AddRange(singlePermutationList);
+            permutationsArray[tour].Add(0);
+            singlePermutationList.Clear();
+            tour++;
+        }
+
+        #endregion
+
+        _finalShortest.AddRange(permutationsArray[0]);
+
+        foreach(List<int> list in permutationsArray)
+        {
+            if (ComputeDistance(list) < ComputeDistance(_finalShortest))
+            {
+                _finalShortest.Clear();
+                _finalShortest.AddRange(list);
+            }
+        }
+
+        totalDistance = ComputeDistance(_finalShortest);
+        
+        _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
     }
 }
+
+    
 
