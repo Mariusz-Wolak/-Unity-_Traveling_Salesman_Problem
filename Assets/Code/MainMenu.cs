@@ -61,7 +61,7 @@ public class MainMenu : MonoBehaviour
         Debug.Log(checkpointsAmount);
     }
 
-    public void SetResolution (int index)
+    public void DropdownResolution_IndexChanged (int index)
     {
         Resolution resolution = _resolutions[index];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
