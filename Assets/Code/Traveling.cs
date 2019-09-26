@@ -40,7 +40,7 @@ public class Traveling : MonoBehaviour
 
     private void Start()
     {
-        _checkpointsText.text = "Checkpoints:\n" + MainMenu.checkpointsAmount;
+        _checkpointsText.text = "\n" + MainMenu.checkpointsAmount;
         _algorithmText.text = MainMenu.algorithmName.ToUpper();
         _startTime = Time.time;
         var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -68,7 +68,7 @@ public class Traveling : MonoBehaviour
             computingSeconds = (((elapsedMs / 1000)) % 60).ToString("f2");
         }
 
-        _ComputingText.text = "Computed in: \n" + computingMinutes + ":" + computingSeconds;
+        _ComputingText.text = "\n" + computingMinutes + ":" + computingSeconds;
 
         _myNavMeshAgent = this.GetComponent<NavMeshAgent>();
 
@@ -111,8 +111,7 @@ public class Traveling : MonoBehaviour
             _seconds = (t % 60).ToString("f2");
         }
         
-        if (_isTraveling) _walkingText.text = "Walking: \n" + _minutes + ":" + _seconds;
-
+        if (_isTraveling) _walkingText.text = "\n" + _minutes + ":" + _seconds;
 
         if (_isTraveling && _myNavMeshAgent.remainingDistance <= 2.0f)
         {
@@ -168,8 +167,6 @@ public class Traveling : MonoBehaviour
 
     private void Insertion()
     {
-        //algorithmText.text = "INSERTION ALGORITHM";
-
         List<int> remainingCheckpoints = new List<int>();
         List<int> currentShortest = new List<int>();
         List<int> currentLoopShortest = new List<int>();
@@ -207,7 +204,7 @@ public class Traveling : MonoBehaviour
 
         totalDistance = ComputeDistance(_finalShortest);
 
-        _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
+        _DistanceText.text = "\n" + totalDistance.ToString("f2");
     }
      
 
@@ -283,7 +280,7 @@ public class Traveling : MonoBehaviour
 
         _finalShortest.Add(startIndex);
         totalDistance = ComputeDistance(_finalShortest);
-        _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
+        _DistanceText.text = "\n" + totalDistance.ToString("f2");
     }
 }
 
