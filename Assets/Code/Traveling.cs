@@ -283,7 +283,7 @@ public class Traveling : MonoBehaviour
         }
 
         shortestDistance = ComputeDistance(_finalShortest);
-        _DistanceText.text = "Total Distance:\n" + shortestDistance.ToString("f2");
+        _DistanceText.text += "\n" + shortestDistance.ToString("f2");
     }
 
     private void RandomCheckpoints()
