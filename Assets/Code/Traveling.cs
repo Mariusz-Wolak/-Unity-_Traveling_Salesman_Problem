@@ -44,7 +44,7 @@ public class Traveling : MonoBehaviour
         _algorithmText.text = MainMenu.algorithmName.ToUpper();
         _startTime = Time.time;
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        RandomCheckpoints();
+        Bruteforce();
         watch.Stop();
         var elapsedMs = watch.ElapsedMilliseconds;
         string computingMinutes;
@@ -210,89 +210,52 @@ public class Traveling : MonoBehaviour
         _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
     }
      
-    public static void RotateRight(IList sequence, int count)
-    {
-        object tmp = sequence[count - 1];
-        sequence.RemoveAt(count - 1);
-        sequence.Insert(0, tmp);
-    }
-
-    public static IEnumerable<IList> Permutate(IList sequence, int count)
-    {
-        if (count == 1) yield return sequence;
-        else
-        {
-            for (int i = 0; i < count; i++)
-            {
-                foreach (var perm in Permutate(sequence, count - 1))
-                    yield return perm;
-                RotateRight(sequence, count);
-            }
-        }
-    }
-
-    public int Factorial(int n)
-    {
-        if (n == 0)
-            return 1;
-        else
-            return n * Factorial(n - 1);
-    }
 
     private void Bruteforce()
     {
-        _algorithmText.text = "BRUTE-FORCE ALGORITHM";
-
         _finalShortest = new List<int>();
-        List<int> listToPermute = new List<int>();
+        List<int> listToPermutate = new List<int>();
+        List<int> currentPermutation = new List<int>();
         int permutationsNumber;
-        List<int>[] permutationsArray;
-        List<int> singlePermutationList = new List<int>();
-        int tour = 0;
-        double totalDistance;
-
-        #region PERMUTATION
+        double shortestDistance;
+        double currentPermutationDistance;
 
         for (int i = 1; i < _myCheckpoints.Count; i++)
         {
-            listToPermute.Add(i);
+            listToPermutate.Add(i);
         }
 
-        permutationsNumber = Factorial(listToPermute.Count);
-        permutationsArray = new List<int>[permutationsNumber];
+        _finalShortest.Add(0);
+        _finalShortest.AddRange(listToPermutate);
+        _finalShortest.Add(0);
+        shortestDistance = ComputeDistance(_finalShortest);
+
+        permutationsNumber = Permutations.Factorial(listToPermutate.Count);
  
-        foreach (var permu in Permutate(listToPermute, listToPermute.Count))
+        foreach (var permu in Permutations.Permutate(listToPermutate, listToPermutate.Count))
         {
+            currentPermutation.Add(0);
             foreach (var i in permu)
             {
-                //Debug.Log($"Checkpoint >{i}< dodajemy do tempList");
-                singlePermutationList.Add((int)i);
+                //Debug.Log($"Checkpoint >{i}< added to tempList");
+                currentPermutation.Add((int)i);
             }
-            
-            permutationsArray[tour] = new List<int>();
-            permutationsArray[tour].Add(0);
-            permutationsArray[tour].AddRange(singlePermutationList);
-            permutationsArray[tour].Add(0);
-            singlePermutationList.Clear();
-            tour++;
-        }
+            currentPermutation.Add(0);
 
-        #endregion
+            currentPermutationDistance = ComputeDistance(currentPermutation);
 
-        _finalShortest.AddRange(permutationsArray[0]);
-
-        foreach(List<int> list in permutationsArray)
-        {
-            if (ComputeDistance(list) < ComputeDistance(_finalShortest))
+            if (currentPermutationDistance < shortestDistance)
             {
+                shortestDistance = currentPermutationDistance;
                 _finalShortest.Clear();
-                _finalShortest.AddRange(list);
+                _finalShortest.AddRange(currentPermutation);
             }
+
+            currentPermutation.Clear();
         }
 
-        totalDistance = ComputeDistance(_finalShortest);
-        
-        _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
+        shortestDistance = ComputeDistance(_finalShortest);
+        _DistanceText.text += "\n" + shortestDistance.ToString("f2");
     }
 
     private void RandomCheckpoints()
