@@ -22,10 +22,16 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private Dropdown _resolutionsDropdown;
 
+    [SerializeField]
+    private Toggle _fullscreenToggle;
 
 
     private void Start()
     {
+        if (!Screen.fullScreen)
+        {
+            _fullscreenToggle.isOn = false;
+        }
         _algorithmDropdown.AddOptions(_algorithmsOptions);
         _checkpointsDropdown.AddOptions(_checkpointsOptions);
 
@@ -65,6 +71,11 @@ public class MainMenu : MonoBehaviour
     {
         Resolution resolution = _resolutions[index];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    public void SetFullscreen (bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen;
     }
 
     public void NextButton()
