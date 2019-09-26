@@ -210,39 +210,11 @@ public class Traveling : MonoBehaviour
         _DistanceText.text = "Total Distance:\n" + totalDistance.ToString("f2");
     }
      
-    public static void RotateRight(IList sequence, int count)
-    {
-        object tmp = sequence[count - 1];
-        sequence.RemoveAt(count - 1);
-        sequence.Insert(0, tmp);
-    }
-
-    public static IEnumerable<IList> Permutate(IList sequence, int count)
-    {
-        if (count == 1) yield return sequence;
-        else
-        {
-            for (int i = 0; i < count; i++)
-            {
-                foreach (var perm in Permutate(sequence, count - 1))
-                    yield return perm;
-                RotateRight(sequence, count);
-            }
-        }
-    }
-
-    public int Factorial(int n)
-    {
-        if (n == 0)
-            return 1;
-        else
-            return n * Factorial(n - 1);
-    }
 
     private void Bruteforce()
     {
         _finalShortest = new List<int>();
-        List<int> listToPermute = new List<int>();
+        List<int> listToPermutate = new List<int>();
         List<int> currentPermutation = new List<int>();
         int permutationsNumber;
         double shortestDistance;
@@ -250,17 +222,17 @@ public class Traveling : MonoBehaviour
 
         for (int i = 1; i < _myCheckpoints.Count; i++)
         {
-            listToPermute.Add(i);
+            listToPermutate.Add(i);
         }
 
         _finalShortest.Add(0);
-        _finalShortest.AddRange(listToPermute);
+        _finalShortest.AddRange(listToPermutate);
         _finalShortest.Add(0);
         shortestDistance = ComputeDistance(_finalShortest);
 
-        permutationsNumber = Factorial(listToPermute.Count);
+        permutationsNumber = Permutations.Factorial(listToPermutate.Count);
  
-        foreach (var permu in Permutate(listToPermute, listToPermute.Count))
+        foreach (var permu in Permutations.Permutate(listToPermutate, listToPermutate.Count))
         {
             currentPermutation.Add(0);
             foreach (var i in permu)
