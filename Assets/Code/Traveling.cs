@@ -263,7 +263,7 @@ public class Traveling : MonoBehaviour
         {
             foreach (var i in permu)
             {
-                //Debug.Log($"Checkpoint >{i}< dodajemy do tempList");
+                //Debug.Log($"Checkpoint >{i}< added to tempList");
                 singlePermutationList.Add((int)i);
             }
             
