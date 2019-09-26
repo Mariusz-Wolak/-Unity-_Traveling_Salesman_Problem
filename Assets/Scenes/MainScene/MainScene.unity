@@ -811,7 +811,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Walking for:'
+  m_Text: 'Walk time:'
 --- !u!222 &732322176
 CanvasRenderer:
   m_ObjectHideFlags: 0
