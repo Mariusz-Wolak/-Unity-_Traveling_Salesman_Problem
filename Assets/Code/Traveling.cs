@@ -241,8 +241,6 @@ public class Traveling : MonoBehaviour
 
     private void Bruteforce()
     {
-        _algorithmText.text = "BRUTE-FORCE ALGORITHM";
-
         _finalShortest = new List<int>();
         List<int> listToPermute = new List<int>();
         int permutationsNumber;
