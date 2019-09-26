@@ -32,8 +32,14 @@ public class MainMenu : MonoBehaviour
         {
             _fullscreenToggle.isOn = false;
         }
+
         _algorithmDropdown.AddOptions(_algorithmsOptions);
+        _algorithmDropdown.value = 0;
+        algorithmName = _algorithmsOptions[0];
+
         _checkpointsDropdown.AddOptions(_checkpointsOptions);
+        _checkpointsDropdown.value = 0;
+        checkpointsAmount = _checkpointsOptions[0];
 
         _resolutions = Screen.resolutions;
 
