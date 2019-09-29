@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 350843885}
   - component: {fileID: 350843884}
   m_Layer: 0
-  m_Name: SpawnManager
+  m_Name: MainSceneInitializer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,6 +239,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _checkpoint: {fileID: 1758183411}
+  _headerText: {fileID: 732322175}
+  _algorithmText: {fileID: 1267119457}
+  _checkpointsText: {fileID: 2131954161}
+  _ComputingText: {fileID: 1842947457}
+  _DistanceText: {fileID: 1775820658}
+  _NPC: {fileID: 1693770943}
 --- !u!4 &350843885
 Transform:
   m_ObjectHideFlags: 0
@@ -327,7 +333,7 @@ Transform:
   m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
   m_Children: []
   m_Father: {fileID: 2080164459}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &607294189
 MeshCollider:
@@ -563,7 +569,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 651415245}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 350843884}
+        m_MethodName: StartButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &651415245
@@ -733,7 +750,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -319.3, y: -48.7}
+  m_AnchoredPosition: {x: -319.3, y: -48.69995}
   m_SizeDelta: {x: -667.81, y: -403.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &676538291
@@ -944,8 +961,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.7, y: 115.5}
-  m_SizeDelta: {x: 387.58, y: 134.49}
+  m_AnchoredPosition: {x: 1, y: 115.5}
+  m_SizeDelta: {x: 472.94, y: 134.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &732322175
 MonoBehaviour:
@@ -980,7 +997,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Place checkpoints: '
+  m_Text: 'Place checkpoints: 0/'
 --- !u!222 &732322176
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1701,7 +1718,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2080164459}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1506498779
 MonoBehaviour:
@@ -1837,7 +1854,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2080164459}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1679418257
 MonoBehaviour:
@@ -1884,15 +1901,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a67114f10c8f21848876389fce96259c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finalShortestIndexer: 0
   _headerText: {fileID: 732322175}
   _ComputingText: {fileID: 1842947457}
-  _DistanceText: {fileID: 1775820658}
-  _algorithmText: {fileID: 1267119457}
-  _checkpointsText: {fileID: 2131954161}
-  _myCheckpoints:
-  - {fileID: 1679418257}
-  - {fileID: 1714907446}
-  - {fileID: 1506498779}
 --- !u!136 &1693770945
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2018,7 +2029,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2080164459}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1714907446
 MonoBehaviour:
@@ -3091,10 +3102,10 @@ Transform:
   m_LocalPosition: {x: -61.6, y: -129.9, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 607294188}
   - {fileID: 1679418256}
   - {fileID: 1714907445}
   - {fileID: 1506498778}
-  - {fileID: 607294188}
   - {fileID: 1903164530}
   - {fileID: 2029900025}
   - {fileID: 1852801702}
