@@ -518,7 +518,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -301.6, y: 16.4}
+  m_AnchoredPosition: {x: -316, y: 108.3}
   m_SizeDelta: {x: 133.69, y: 50.485}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &651415244
@@ -733,7 +733,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -299.99, y: -96.9}
+  m_AnchoredPosition: {x: -319.3, y: -48.7}
   m_SizeDelta: {x: -667.81, y: -403.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &676538291
@@ -922,7 +922,7 @@ GameObject:
   - component: {fileID: 732322176}
   - component: {fileID: 732322175}
   m_Layer: 5
-  m_Name: WalkingText
+  m_Name: HeaderText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -944,8 +944,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: 107}
-  m_SizeDelta: {x: 322.8, y: 166.6}
+  m_AnchoredPosition: {x: -4.7, y: 115.5}
+  m_SizeDelta: {x: 387.58, y: 134.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &732322175
 MonoBehaviour:
@@ -980,7 +980,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Walk time:'
+  m_Text: 'Place checkpoints: '
 --- !u!222 &732322176
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1884,7 +1884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a67114f10c8f21848876389fce96259c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _walkingText: {fileID: 732322175}
+  _headerText: {fileID: 732322175}
   _ComputingText: {fileID: 1842947457}
   _DistanceText: {fileID: 1775820658}
   _algorithmText: {fileID: 1267119457}
@@ -2388,8 +2388,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 288, y: 105}
-  m_SizeDelta: {x: 322.8, y: 166.6}
+  m_AnchoredPosition: {x: 263.3, y: 55.6}
+  m_SizeDelta: {x: 418.74, y: 57.84}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1775820658
 MonoBehaviour:
@@ -2424,7 +2424,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Total distance:'
+  m_Text: 'Total distance: '
 --- !u!222 &1775820659
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2510,8 +2510,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -294, y: 110}
-  m_SizeDelta: {x: 322.8, y: 166.6}
+  m_AnchoredPosition: {x: 282.1, y: -15.8}
+  m_SizeDelta: {x: 322.8, y: 157.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1842947457
 MonoBehaviour:
@@ -2526,7 +2526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.6117647, b: 0.19215687, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2978,7 +2978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -303, y: -42.5}
+  m_AnchoredPosition: {x: -318.4, y: 28.6}
   m_SizeDelta: {x: 161.09, y: 47.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2077458568
@@ -3226,8 +3226,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 289, y: -9}
-  m_SizeDelta: {x: 322.8, y: 166.6}
+  m_AnchoredPosition: {x: 266.9, y: 117.7}
+  m_SizeDelta: {x: 322.8, y: 66.046}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2131954161
 MonoBehaviour:
@@ -3262,7 +3262,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Checkpoints:'
+  m_Text: 'Checkpoints: '
 --- !u!222 &2131954162
 CanvasRenderer:
   m_ObjectHideFlags: 0

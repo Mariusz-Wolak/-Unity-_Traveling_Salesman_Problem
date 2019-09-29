@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class Traveling : MonoBehaviour
 {
     [SerializeField]
-    private Text _walkingText;
+    private Text _headerText;
 
     [SerializeField]
     private Text _ComputingText;
@@ -40,7 +40,7 @@ public class Traveling : MonoBehaviour
 
     private void Start()
     {
-        _checkpointsText.text += "\n" + MainMenu.checkpointsAmount;
+        _checkpointsText.text += MainMenu.checkpointsAmount;
         _algorithmText.text = MainMenu.algorithmName.ToUpper();
         _startTime = Time.time;
         var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -111,7 +111,7 @@ public class Traveling : MonoBehaviour
             _seconds = (t % 60).ToString("f2");
         }
         
-        if (_isTraveling) _walkingText.text = "Walk time:\n" + _minutes + ":" + _seconds;
+        if (_isTraveling) _headerText.text = "Walk time:\n" + _minutes + ":" + _seconds;
 
         if (_isTraveling && _myNavMeshAgent.remainingDistance <= 2.0f)
         {
@@ -204,7 +204,7 @@ public class Traveling : MonoBehaviour
 
         totalDistance = ComputeDistance(_finalShortest);
 
-        _DistanceText.text += "\n" + totalDistance.ToString("f2");
+        _DistanceText.text += totalDistance.ToString("f2");
     }
      
 
@@ -252,7 +252,7 @@ public class Traveling : MonoBehaviour
         }
 
         shortestDistance = ComputeDistance(_finalShortest);
-        _DistanceText.text += "\n" + shortestDistance.ToString("f2");
+        _DistanceText.text += shortestDistance.ToString("f2");
     }
 
     private void RandomCheckpoints()
@@ -280,7 +280,7 @@ public class Traveling : MonoBehaviour
 
         _finalShortest.Add(startIndex);
         totalDistance = ComputeDistance(_finalShortest);
-        _DistanceText.text += "\n" + totalDistance.ToString("f2");
+        _DistanceText.text += totalDistance.ToString("f2");
     }
 }
 
