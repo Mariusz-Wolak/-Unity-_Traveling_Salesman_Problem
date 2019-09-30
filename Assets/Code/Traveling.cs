@@ -29,26 +29,26 @@ public class Traveling : MonoBehaviour
 
     public void Update()
     {
-        float t = Time.time - MainSceneInitializer.startTime;
+        float t = Time.time - MainSceneManager.startTime;
         if (((int)t / 60) < 10)
         {
-            MainSceneInitializer.minutes = "0" + ((int)t / 60).ToString();
+            MainSceneManager.minutes = "0" + ((int)t / 60).ToString();
         }
         else
         {
-            MainSceneInitializer.minutes = ((int)t / 60).ToString();
+            MainSceneManager.minutes = ((int)t / 60).ToString();
         }
         
         if((t % 60) < 10)
         {
-            MainSceneInitializer.seconds = "0" + (t % 60).ToString("f2");
+            MainSceneManager.seconds = "0" + (t % 60).ToString("f2");
         }
         else
         {
-            MainSceneInitializer.seconds = (t % 60).ToString("f2");
+            MainSceneManager.seconds = (t % 60).ToString("f2");
         }
         
-        if (isTraveling) _headerText.text = "Walk time:\n" + MainSceneInitializer.minutes + ":" + MainSceneInitializer.seconds;
+        if (isTraveling) _headerText.text = "Walk time:\n" + MainSceneManager.minutes + ":" + MainSceneManager.seconds;
 
         if (isTraveling && myNavMeshAgent.remainingDistance <= 2.0f)
         {
@@ -64,9 +64,9 @@ public class Traveling : MonoBehaviour
 
     public static void MySetDestination()
     {
-        if (MainSceneInitializer.myCheckpoints != null)
+        if (MainSceneManager.myCheckpoints != null)
         {
-            Vector3 targetVector = MainSceneInitializer.myCheckpoints[currentCheckpointIndex].transform.position;
+            Vector3 targetVector = MainSceneManager.myCheckpoints[currentCheckpointIndex].transform.position;
             myNavMeshAgent.SetDestination(targetVector);
             isTraveling = true;
         }
@@ -76,11 +76,11 @@ public class Traveling : MonoBehaviour
     {
         finalShortestIndexer++;
 
-        if (finalShortestIndexer - 1 > MainSceneInitializer.myCheckpoints.Count) //final shortest path has 1 more element than Checkpoints, because we go back
+        if (finalShortestIndexer - 1 > MainSceneManager.myCheckpoints.Count) //final shortest path has 1 more element than Checkpoints, because we go back
         {
             myNavMeshAgent.isStopped = true;
         }
-        else if (finalShortestIndexer == MainSceneInitializer.myCheckpoints.Count + 1) // if about to go to the last Checkpoint, go to Checkpoint[0]
+        else if (finalShortestIndexer == MainSceneManager.myCheckpoints.Count + 1) // if about to go to the last Checkpoint, go to Checkpoint[0]
         {
             currentCheckpointIndex = 0;
         }
@@ -96,7 +96,7 @@ public class Traveling : MonoBehaviour
 
         for (int i = 0; i < myList.Count - 1; i++) //10 elements: 0-9, index [8] goes to [9] and we stop there
         {
-            distance += Vector3.Distance(MainSceneInitializer.myCheckpoints[myList[i]].transform.position, MainSceneInitializer.myCheckpoints[myList[i + 1]].transform.position);
+            distance += Vector3.Distance(MainSceneManager.myCheckpoints[myList[i]].transform.position, MainSceneManager.myCheckpoints[myList[i + 1]].transform.position);
         }
 
         return distance;
@@ -110,7 +110,7 @@ public class Traveling : MonoBehaviour
         int startIndex = 0;
         System.Random random = new System.Random();
 
-        for (int i = 1; i < MainSceneInitializer.myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set below
+        for (int i = 1; i < MainSceneManager.myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set below
         {
             remainingCheckpoints.Add(i);
         }
@@ -122,7 +122,7 @@ public class Traveling : MonoBehaviour
 
         currentShortest.AddRange(finalShortest);
 
-        while (finalShortest.Count <= MainSceneInitializer.myCheckpoints.Count) // because we have to go back, so finalShortest has 1 more Checkpoints than all Checkpoints
+        while (finalShortest.Count <= MainSceneManager.myCheckpoints.Count) // because we have to go back, so finalShortest has 1 more Checkpoints than all Checkpoints
         {
             int randomIndex = random.Next(0, remainingCheckpoints.Count);
             currentShortest.Insert(1, remainingCheckpoints[randomIndex]);
@@ -138,7 +138,7 @@ public class Traveling : MonoBehaviour
             remainingCheckpoints.RemoveAt(randomIndex);
         }
 
-        MainSceneInitializer.totalDistance = ComputeDistance(finalShortest);
+        MainSceneManager.totalDistance = ComputeDistance(finalShortest);
     }
 
 
@@ -150,9 +150,9 @@ public class Traveling : MonoBehaviour
         int permutationsNumber;
         double currentPermutationDistance;
 
-        Debug.Log("MainSceneInitializer.myCheckpoints.Count: "+MainSceneInitializer.myCheckpoints.Count);
+        Debug.Log("MainSceneManager.myCheckpoints.Count: "+MainSceneManager.myCheckpoints.Count);
 
-        for (int i = 1; i < MainSceneInitializer.myCheckpoints.Count; i++)
+        for (int i = 1; i < MainSceneManager.myCheckpoints.Count; i++)
         {
             listToPermutate.Add(i);
             Debug.Log($"added {i} to listToPermutate");
@@ -162,7 +162,7 @@ public class Traveling : MonoBehaviour
         finalShortest.AddRange(listToPermutate);
         finalShortest.Add(0);
         Debug.Log("Final Shortest Count: "+finalShortest.Count);
-        MainSceneInitializer.totalDistance = ComputeDistance(finalShortest);
+        MainSceneManager.totalDistance = ComputeDistance(finalShortest);
 
         permutationsNumber = Permutations.Factorial(listToPermutate.Count);
  
@@ -178,9 +178,9 @@ public class Traveling : MonoBehaviour
 
             currentPermutationDistance = ComputeDistance(currentPermutation);
 
-            if (currentPermutationDistance < MainSceneInitializer.totalDistance)
+            if (currentPermutationDistance < MainSceneManager.totalDistance)
             {
-                MainSceneInitializer.totalDistance = currentPermutationDistance;
+                MainSceneManager.totalDistance = currentPermutationDistance;
                 finalShortest.Clear();
                 finalShortest.AddRange(currentPermutation);
             }
@@ -188,7 +188,7 @@ public class Traveling : MonoBehaviour
             currentPermutation.Clear();
         }
 
-        MainSceneInitializer.totalDistance = ComputeDistance(finalShortest);
+        MainSceneManager.totalDistance = ComputeDistance(finalShortest);
     }
 
     public static void RandomCheckpoints()
@@ -198,7 +198,7 @@ public class Traveling : MonoBehaviour
         System.Random random = new System.Random();
         int randomIndex;
 
-        for (int i = 1; i < MainSceneInitializer.myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set
+        for (int i = 1; i < MainSceneManager.myCheckpoints.Count; i++) //starting at 1, because startIndex = 0 is set
         {
             remainingCheckpoints.Add(i);
         }
@@ -206,7 +206,7 @@ public class Traveling : MonoBehaviour
         finalShortest = new List<int>();
         finalShortest.Add(startIndex);
         
-        while (finalShortest.Count < MainSceneInitializer.myCheckpoints.Count)
+        while (finalShortest.Count < MainSceneManager.myCheckpoints.Count)
         {
             randomIndex = random.Next(0, remainingCheckpoints.Count);
             finalShortest.Add(remainingCheckpoints[randomIndex]);
@@ -214,7 +214,7 @@ public class Traveling : MonoBehaviour
         }
 
         finalShortest.Add(startIndex);
-        MainSceneInitializer.totalDistance = ComputeDistance(finalShortest);
+        MainSceneManager.totalDistance = ComputeDistance(finalShortest);
         
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
-public class MainSceneInitializer : MonoBehaviour
+public class MainSceneManager : MonoBehaviour
 {
     public static Vector3 clickPosition;
     public static List<GameObject> myCheckpoints = new List<GameObject>();
@@ -89,20 +89,17 @@ public class MainSceneInitializer : MonoBehaviour
             _StartButton.enabled = false;
             startTime = Time.time;
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            Debug.Log("MainMenu.algorithmName =" + MainMenu.algorithmName);
+
             if (MainMenu.algorithmName == "Insertion")
             {
-                Debug.Log("insertion dziala");
                 Traveling.Insertion();
             }
             else if (MainMenu.algorithmName == "Brute-force")
             {
-                Debug.Log("bruteforce dziala");
                 Traveling.Bruteforce();
             }
             else if (MainMenu.algorithmName == "Random checkpoints")
             {
-                Debug.Log("random checkpoints dziala");
                 Traveling.RandomCheckpoints();
             }
 
