@@ -58,7 +58,10 @@ public class Traveling : MonoBehaviour
         if (isTraveling && myNavMeshAgent.remainingDistance <= 2.0f)
         {
             isTraveling = false;
-            MainSceneManager.myCheckpoints[currentCheckpointIndex].GetComponent<Renderer>().material = _greenMaterial;
+            if (currentCheckpointIndex != 0)
+            {
+                MainSceneManager.myCheckpoints[currentCheckpointIndex].GetComponent<Renderer>().material = _greenMaterial;
+            }
 
             if (!myNavMeshAgent.isStopped)
             {
