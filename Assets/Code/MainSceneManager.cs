@@ -47,7 +47,7 @@ public class MainSceneManager : MonoBehaviour
     {
         _headerText.text = "Place checkpoints: 0/" + MainMenu.checkpointsAmount;
         _checkpointsText.text += MainMenu.checkpointsAmount;
-        _algorithmText.text = MainMenu.algorithmName.ToUpper();
+        _algorithmText.text = "ALGORITHM: " + MainMenu.algorithmName.ToUpper();
     }
 
 
