@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class MainSceneInitializer : MonoBehaviour
 {
@@ -131,5 +132,11 @@ public class MainSceneInitializer : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void MenuButton()
+    {
+        myCheckpoints.Clear();
+        SceneManager.LoadScene(0);
     }
 }
