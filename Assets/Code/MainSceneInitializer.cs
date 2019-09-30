@@ -48,7 +48,7 @@ public class MainSceneInitializer : MonoBehaviour
 
     private void Start()
     {
-        _headerText.text += MainMenu.checkpointsAmount;
+        _headerText.text = "Place checkpoints: 0/" + MainMenu.checkpointsAmount;
         _checkpointsText.text += MainMenu.checkpointsAmount;
         _algorithmText.text = MainMenu.algorithmName.ToUpper();
     }
@@ -136,7 +136,10 @@ public class MainSceneInitializer : MonoBehaviour
 
     public void MenuButton()
     {
+        Traveling.isTraveling = false;
         myCheckpoints.Clear();
+        _headerText.text = "Place checkpoints: 0/" + MainMenu.checkpointsAmount;
+        Traveling.currentCheckpointIndex = 0;
         SceneManager.LoadScene(0);
     }
 }
