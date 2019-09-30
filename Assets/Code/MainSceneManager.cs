@@ -16,6 +16,9 @@ public class MainSceneManager : MonoBehaviour
     private bool _placeNPC = true;
 
     [SerializeField]
+    private GameObject _NPC;
+
+    [SerializeField]
     private LayerMask _clickMask;
 
     [SerializeField]
@@ -35,9 +38,6 @@ public class MainSceneManager : MonoBehaviour
 
     [SerializeField]
     private Text _DistanceText;
-
-    [SerializeField]
-    private GameObject _NPC;
 
     [SerializeField]
     private Button _StartButton;

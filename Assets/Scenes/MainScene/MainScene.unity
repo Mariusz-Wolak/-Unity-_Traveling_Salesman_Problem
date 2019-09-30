@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f2c20d342b74fb4db165cb0d3897e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _NPC: {fileID: 1693770943}
   _clickMask:
     serializedVersion: 2
     m_Bits: 256
@@ -158,7 +159,6 @@ MonoBehaviour:
   _checkpointsText: {fileID: 2131954161}
   _ComputingText: {fileID: 1842947457}
   _DistanceText: {fileID: 1775820658}
-  _NPC: {fileID: 1693770943}
   _StartButton: {fileID: 651415244}
 --- !u!4 &350843885
 Transform:
@@ -1099,6 +1099,7 @@ MonoBehaviour:
   _greenMaterial: {fileID: 2100000, guid: 8d2b7c72b166aa140b3d5975a0f7dd5d, type: 2}
   _headerText: {fileID: 732322175}
   _ComputingText: {fileID: 1842947457}
+  _NPC: {fileID: 1693770943}
 --- !u!136 &1693770945
 CapsuleCollider:
   m_ObjectHideFlags: 0

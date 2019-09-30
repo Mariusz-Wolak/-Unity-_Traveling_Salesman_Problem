@@ -26,6 +26,9 @@ public class Traveling : MonoBehaviour
     [SerializeField]
     private Text _ComputingText;
 
+    [SerializeField]
+    private GameObject _NPC;
+
 
     private void Start()
     {
@@ -88,6 +91,8 @@ public class Traveling : MonoBehaviour
         if (_finalShortestIndexer - 1 > MainSceneManager.myCheckpoints.Count) //final shortest path has 1 more element than Checkpoints, because we go back
         {
             myNavMeshAgent.isStopped = true;
+            _NPC.GetComponent<Renderer>().material = _greenMaterial;
+            MainSceneManager.myCheckpoints[currentCheckpointIndex].GetComponent<Renderer>().material = _greenMaterial;
         }
         else if (_finalShortestIndexer == MainSceneManager.myCheckpoints.Count + 1) // if about to go to the last Checkpoint, go to Checkpoint[0]
         {
