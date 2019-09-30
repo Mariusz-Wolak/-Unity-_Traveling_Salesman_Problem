@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Algorithms : MonoBehaviour
+public static class Algorithms
 {
     public static List<int> finalShortest = new List<int>();
 
