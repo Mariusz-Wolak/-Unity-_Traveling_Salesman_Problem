@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     public static string algorithmName;
     public static string checkpointsAmount;
     private List<string> _algorithmsOptions = new List<string>() { "Insertion", "Brute-force", "Random checkpoints" };
-    private List<string> _checkpointsOptions = new List<string>() { "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
+    private List<string> _checkpointsOptions = new List<string>() { "4", "5", "6", "7", "8", "9" };
     private List<string> _resolutionsOptions = new List<string>();
     private Resolution[] _resolutions;
 
