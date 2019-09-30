@@ -89,15 +89,15 @@ public class MainSceneManager : MonoBehaviour
 
             if (MainMenu.algorithmName == "Insertion")
             {
-                Traveling.Insertion();
+                Algorithms.Insertion();
             }
             else if (MainMenu.algorithmName == "Brute-force")
             {
-                Traveling.Bruteforce();
+                Algorithms.Bruteforce();
             }
             else if (MainMenu.algorithmName == "Random checkpoints")
             {
-                Traveling.RandomCheckpoints();
+                Algorithms.RandomCheckpoints();
             }
 
             watch.Stop();
