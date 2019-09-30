@@ -18,6 +18,9 @@ public class Traveling : MonoBehaviour
     private string _seconds = "";
 
     [SerializeField]
+    private Material _greenMaterial;
+
+    [SerializeField]
     private Text _headerText;
 
     [SerializeField]
@@ -55,6 +58,7 @@ public class Traveling : MonoBehaviour
         if (isTraveling && myNavMeshAgent.remainingDistance <= 2.0f)
         {
             isTraveling = false;
+            MainSceneManager.myCheckpoints[currentCheckpointIndex].GetComponent<Renderer>().material = _greenMaterial;
 
             if (!myNavMeshAgent.isStopped)
             {
