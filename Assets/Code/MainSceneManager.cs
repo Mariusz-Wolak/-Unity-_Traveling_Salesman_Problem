@@ -9,11 +9,8 @@ public class MainSceneManager : MonoBehaviour
 {
     public static Vector3 clickPosition;
     public static List<GameObject> myCheckpoints = new List<GameObject>();
-    public static float startTime;
-    public static string minutes = "";
-    public static string seconds = "";
     public static double totalDistance;
-
+    public static float startTime;
     private int _placedCheckpoints = 0;
     private int _checkpointsAmount = int.Parse(MainMenu.checkpointsAmount);
     private bool _placeNPC = true;

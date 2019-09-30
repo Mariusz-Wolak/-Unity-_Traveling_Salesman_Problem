@@ -14,6 +14,8 @@ public class Traveling : MonoBehaviour
     public static int currentCheckpointIndex = 0;
     public static bool isTraveling;
     public int finalShortestIndexer = 0;
+    private string _minutes = "";
+    private string _seconds = "";
 
     [SerializeField]
     private Text _headerText;
@@ -32,23 +34,23 @@ public class Traveling : MonoBehaviour
         float t = Time.time - MainSceneManager.startTime;
         if (((int)t / 60) < 10)
         {
-            MainSceneManager.minutes = "0" + ((int)t / 60).ToString();
+            _minutes = "0" + ((int)t / 60).ToString();
         }
         else
         {
-            MainSceneManager.minutes = ((int)t / 60).ToString();
+            _minutes = ((int)t / 60).ToString();
         }
         
         if((t % 60) < 10)
         {
-            MainSceneManager.seconds = "0" + (t % 60).ToString("f2");
+            _seconds = "0" + (t % 60).ToString("f2");
         }
         else
         {
-            MainSceneManager.seconds = (t % 60).ToString("f2");
+            _seconds = (t % 60).ToString("f2");
         }
         
-        if (isTraveling) _headerText.text = "Walk time:\n" + MainSceneManager.minutes + ":" + MainSceneManager.seconds;
+        if (isTraveling) _headerText.text = "Walk time:\n" + _minutes + ":" + _seconds;
 
         if (isTraveling && myNavMeshAgent.remainingDistance <= 2.0f)
         {
