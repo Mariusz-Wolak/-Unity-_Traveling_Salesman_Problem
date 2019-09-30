@@ -15,6 +15,7 @@ public class MainSceneInitializer : MonoBehaviour
 
     private int _placedCheckpoints = 0;
     private int _checkpointsAmount = int.Parse(MainMenu.checkpointsAmount);
+    private bool _placeNPC = true;
 
     [SerializeField]
     private LayerMask _clickMask;
@@ -40,6 +41,9 @@ public class MainSceneInitializer : MonoBehaviour
     [SerializeField]
     private GameObject _NPC;
 
+    [SerializeField]
+    private Button _StartButton;
+
 
     private void Start()
     {
@@ -61,60 +65,70 @@ public class MainSceneInitializer : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 80f, _clickMask))
             {
                 clickPosition = hit.point;
+
+                clickPosition.y += (float)0.1;
+                GameObject newCheckpoint = (GameObject)Instantiate(_checkpoint, clickPosition, Quaternion.identity);
+                myCheckpoints.Add(newCheckpoint);
+                _placedCheckpoints++;
+                _headerText.text = $"Place checkpoints: {_placedCheckpoints}/{_checkpointsAmount}";
+
+                if (_placeNPC)
+                {
+                    _NPC.transform.position = clickPosition;
+                    _placeNPC = false;
+                }
             }
-            
-            clickPosition.y += (float)0.1;
-            GameObject newCheckpoint = (GameObject)Instantiate(_checkpoint, clickPosition, Quaternion.identity);
-            myCheckpoints.Add(newCheckpoint);
-            _placedCheckpoints++;
-            _headerText.text = $"Place checkpoints: {_placedCheckpoints}/{_checkpointsAmount}";
         }
     }
 
     public void StartButton()
     {
-        startTime = Time.time;
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        Traveling.Bruteforce();
-        watch.Stop();
-        var elapsedMs = watch.ElapsedMilliseconds;
-        string computingMinutes;
-        string computingSeconds;
+        if (_placedCheckpoints == _checkpointsAmount)
+        {
+            _StartButton.enabled = false;
+            startTime = Time.time;
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            Traveling.Bruteforce();
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            string computingMinutes;
+            string computingSeconds;
 
-        if ((elapsedMs / 1000) / 60 < 10)
-        {
-            computingMinutes = "0" + ((elapsedMs / 1000) / 60).ToString();
-        }
-        else
-        {
-            computingMinutes = ((elapsedMs / 1000) / 60).ToString();
-        }
-
-        if ((elapsedMs / 1000) < 10)
-        {
-            computingSeconds = "0" + (((elapsedMs / 1000)) % 60).ToString("f2");
-        }
-        else
-        {
-            computingSeconds = (((elapsedMs / 1000)) % 60).ToString("f2");
-        }
-
-        _ComputingText.text += "\n" + computingMinutes + ":" + computingSeconds;
-        _DistanceText.text += totalDistance.ToString("f2");
-
-        if (Traveling.myNavMeshAgent == null)
-        {
-            Debug.LogError("NavMeshAgent component isn't attached to " + gameObject.name);
-        }
-        else
-        {
-            if (myCheckpoints != null && myCheckpoints.Count >= 2)
+            if ((elapsedMs / 1000) / 60 < 10)
             {
-                Traveling.MySetDestination();
+                computingMinutes = "0" + ((elapsedMs / 1000) / 60).ToString();
             }
             else
             {
-                Debug.Log("Need more checkpoints");
+                computingMinutes = ((elapsedMs / 1000) / 60).ToString();
+            }
+
+            if ((elapsedMs / 1000) < 10)
+            {
+                computingSeconds = "0" + (((elapsedMs / 1000)) % 60).ToString("f2");
+            }
+            else
+            {
+                computingSeconds = (((elapsedMs / 1000)) % 60).ToString("f2");
+            }
+
+            _ComputingText.text += "\n" + computingMinutes + ":" + computingSeconds;
+            _DistanceText.text += totalDistance.ToString("f2");
+
+            if (Traveling.myNavMeshAgent == null)
+            {
+                Debug.LogError("NavMeshAgent component isn't attached to " + gameObject.name);
+            }
+            else
+            {
+                if (myCheckpoints != null && myCheckpoints.Count >= 2)
+                {
+                    Traveling.MySetDestination();
+                }
+                else
+                {
+                    Debug.Log("Need more checkpoints");
+                }
             }
         }
     }
