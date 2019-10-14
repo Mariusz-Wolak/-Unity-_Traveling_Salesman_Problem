@@ -6,6 +6,7 @@ public class RandomCheckpointsAlgorithm : Algorithm
 {
     public override void FindTheShortest()
     {
+        Debug.Log("random checkpoints");
         List<int> remainingCheckpoints = new List<int>();
         int startIndex = 0;
         System.Random random = new System.Random();

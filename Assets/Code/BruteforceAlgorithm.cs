@@ -6,6 +6,7 @@ public class BruteforceAlgorithm : Algorithm
 {
     public override void FindTheShortest()
     {
+        Debug.Log("bruteforce");
         List<int> listToPermutate = new List<int>();
         List<int> currentPermutation = new List<int>();
 

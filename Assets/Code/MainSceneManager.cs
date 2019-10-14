@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MainSceneManager : MonoBehaviour
 {
@@ -89,17 +90,15 @@ public class MainSceneManager : MonoBehaviour
 
             AlgorithmManager algorithm = new AlgorithmManager();
 
-            if (MainMenu.algorithmName == "Insertion")
+            switch (MainMenu.algorithmOption)
             {
-                algorithm.SetAlgorithm(new InsertionAlgorithm());
-            }
-            else if (MainMenu.algorithmName == "Brute-force")
-            {
-                algorithm.SetAlgorithm(new BruteforceAlgorithm());
-            }
-            else if (MainMenu.algorithmName == "Random checkpoints")
-            {
-                algorithm.SetAlgorithm(new RandomCheckpointsAlgorithm());
+                case 0: algorithm.SetAlgorithm(new InsertionAlgorithm());
+                    break;
+                case 1: algorithm.SetAlgorithm(new BruteforceAlgorithm());
+                    break;
+                case 2: algorithm.SetAlgorithm(new RandomCheckpointsAlgorithm());
+                    break;
+                default: throw new ArgumentOutOfRangeException();
             }
 
             algorithm.FindTheShortest();

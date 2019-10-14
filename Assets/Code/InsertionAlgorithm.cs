@@ -6,6 +6,7 @@ public class InsertionAlgorithm : Algorithm
 {
     public override void FindTheShortest()
     {
+        Debug.Log("insertion");
         List<int> remainingCheckpoints = new List<int>();
         List<int> currentShortest = new List<int>();
         List<int> currentLoopShortest = new List<int>();
