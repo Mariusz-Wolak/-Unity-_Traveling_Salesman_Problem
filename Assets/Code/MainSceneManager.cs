@@ -87,18 +87,22 @@ public class MainSceneManager : MonoBehaviour
             startTime = Time.time;
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
+            AlgorithmManager algorithm = new AlgorithmManager();
+
             if (MainMenu.algorithmName == "Insertion")
             {
-                Algorithm.Insertion();
+                algorithm.SetAlgorithm(new InsertionAlgorithm());
             }
             else if (MainMenu.algorithmName == "Brute-force")
             {
-                Algorithm.Bruteforce();
+                
             }
             else if (MainMenu.algorithmName == "Random checkpoints")
             {
-                Algorithm.RandomCheckpoints();
+                
             }
+
+            algorithm.FindTheShortest();
 
             totalDistance = ComputeDistance(Algorithm.finalShortest);
 
