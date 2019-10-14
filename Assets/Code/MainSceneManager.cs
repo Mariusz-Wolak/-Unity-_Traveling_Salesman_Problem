@@ -100,6 +100,8 @@ public class MainSceneManager : MonoBehaviour
                 Algorithms.RandomCheckpoints();
             }
 
+            totalDistance = ComputeDistance(Algorithms.finalShortest);
+
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             string computingMinutes;
@@ -151,5 +153,17 @@ public class MainSceneManager : MonoBehaviour
         _headerText.text = "Place checkpoints: 0/" + MainMenu.checkpointsAmount;
         Traveling.currentCheckpointIndex = 0;
         SceneManager.LoadScene(0);
+    }
+
+    public static double ComputeDistance(List<int> myList)
+    {
+        double distance = 0;
+
+        for (int i = 0; i < myList.Count - 1; i++) //10 elements: 0-9, index [8] goes to [9] and we stop there
+        {
+            distance += Vector3.Distance(MainSceneManager.myCheckpoints[myList[i]].transform.position, MainSceneManager.myCheckpoints[myList[i + 1]].transform.position);
+        }
+
+        return distance;
     }
 }

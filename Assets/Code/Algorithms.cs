@@ -6,18 +6,6 @@ public static class Algorithms
 {
     public static List<int> finalShortest = new List<int>();
 
-    public static double ComputeDistance(List<int> myList)
-    {
-        double distance = 0;
-
-        for (int i = 0; i < myList.Count - 1; i++) //10 elements: 0-9, index [8] goes to [9] and we stop there
-        {
-            distance += Vector3.Distance(MainSceneManager.myCheckpoints[myList[i]].transform.position, MainSceneManager.myCheckpoints[myList[i + 1]].transform.position);
-        }
-
-        return distance;
-    }
-
     public static void Insertion()
     {
         List<int> remainingCheckpoints = new List<int>();
@@ -47,14 +35,12 @@ public static class Algorithms
                 currentLoopShortest.Clear();
                 currentLoopShortest.AddRange(finalShortest);
                 currentLoopShortest.Insert(i, remainingCheckpoints[randomIndex]);
-                if (ComputeDistance(currentLoopShortest) < ComputeDistance(currentShortest)) currentShortest = currentLoopShortest;
+                if (MainSceneManager.ComputeDistance(currentLoopShortest) < MainSceneManager.ComputeDistance(currentShortest)) currentShortest = currentLoopShortest;
             }
             finalShortest.Clear();
             finalShortest.AddRange(currentShortest);
             remainingCheckpoints.RemoveAt(randomIndex);
         }
-
-        MainSceneManager.totalDistance = ComputeDistance(finalShortest);
     }
 
 
@@ -77,8 +63,6 @@ public static class Algorithms
         finalShortest.Add(0);
         finalShortest.AddRange(listToPermutate);
         finalShortest.Add(0);
-        Debug.Log("Final Shortest Count: " + finalShortest.Count);
-        MainSceneManager.totalDistance = ComputeDistance(finalShortest);
 
         permutationsNumber = Permutations.Factorial(listToPermutate.Count);
 
@@ -92,7 +76,7 @@ public static class Algorithms
             }
             currentPermutation.Add(0);
 
-            currentPermutationDistance = ComputeDistance(currentPermutation);
+            currentPermutationDistance = MainSceneManager.ComputeDistance(currentPermutation);
 
             if (currentPermutationDistance < MainSceneManager.totalDistance)
             {
@@ -103,8 +87,6 @@ public static class Algorithms
 
             currentPermutation.Clear();
         }
-
-        MainSceneManager.totalDistance = ComputeDistance(finalShortest);
     }
 
     public static void RandomCheckpoints()
@@ -130,7 +112,5 @@ public static class Algorithms
         }
 
         finalShortest.Add(startIndex);
-        MainSceneManager.totalDistance = ComputeDistance(finalShortest);
-
     }
 }
