@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     public static string algorithmName;
     public static string checkpointsAmount;
+    public static int algorithmOption;
     private List<string> _algorithmsOptions = new List<string>() { "Insertion", "Brute-force", "Random checkpoints" };
     private List<string> _checkpointsOptions = new List<string>() { "4", "5", "6", "7", "8", "9" };
     private List<string> _resolutionsOptions = new List<string>();
@@ -35,6 +36,7 @@ public class MainMenu : MonoBehaviour
 
         _algorithmDropdown.AddOptions(_algorithmsOptions);
         _algorithmDropdown.value = 0;
+        algorithmOption = _algorithmDropdown.value;
         algorithmName = _algorithmsOptions[0];
 
         _checkpointsDropdown.AddOptions(_checkpointsOptions);
@@ -64,6 +66,7 @@ public class MainMenu : MonoBehaviour
     public void DropdownAlgorithm_IndexChanged(int index)
     {
         algorithmName = _algorithmsOptions[index];
+        algorithmOption = index;
         Debug.Log(algorithmName);
     }
 

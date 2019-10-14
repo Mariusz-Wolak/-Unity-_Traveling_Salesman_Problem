@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MainSceneManager : MonoBehaviour
 {
@@ -87,18 +88,21 @@ public class MainSceneManager : MonoBehaviour
             startTime = Time.time;
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            if (MainMenu.algorithmName == "Insertion")
+            AlgorithmManager algorithm = new AlgorithmManager();
+
+            switch (MainMenu.algorithmOption)
             {
-                Algorithms.Insertion();
+                case 0: algorithm.SetAlgorithm(new InsertionAlgorithm());
+                    break;
+                case 1: algorithm.SetAlgorithm(new BruteforceAlgorithm());
+                    break;
+                case 2: algorithm.SetAlgorithm(new RandomCheckpointsAlgorithm());
+                    break;
+                default: throw new ArgumentOutOfRangeException();
             }
-            else if (MainMenu.algorithmName == "Brute-force")
-            {
-                Algorithms.Bruteforce();
-            }
-            else if (MainMenu.algorithmName == "Random checkpoints")
-            {
-                Algorithms.RandomCheckpoints();
-            }
+
+            algorithm.FindTheShortest();
+            totalDistance = ComputeDistance(Algorithm.finalShortest);
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
@@ -151,5 +155,17 @@ public class MainSceneManager : MonoBehaviour
         _headerText.text = "Place checkpoints: 0/" + MainMenu.checkpointsAmount;
         Traveling.currentCheckpointIndex = 0;
         SceneManager.LoadScene(0);
+    }
+
+    public static double ComputeDistance(List<int> myList)
+    {
+        double distance = 0;
+
+        for (int i = 0; i < myList.Count - 1; i++) //10 elements: 0-9, index [8] goes to [9] and we stop there
+        {
+            distance += Vector3.Distance(MainSceneManager.myCheckpoints[myList[i]].transform.position, MainSceneManager.myCheckpoints[myList[i + 1]].transform.position);
+        }
+
+        return distance;
     }
 }
