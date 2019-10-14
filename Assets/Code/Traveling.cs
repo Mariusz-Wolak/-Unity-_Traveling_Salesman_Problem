@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class Traveling : MonoBehaviour
 {
-    
     public static NavMeshAgent myNavMeshAgent;
     public static int currentCheckpointIndex = 0;
     public static bool isTraveling;

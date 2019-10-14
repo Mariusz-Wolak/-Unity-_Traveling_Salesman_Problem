@@ -95,15 +95,14 @@ public class MainSceneManager : MonoBehaviour
             }
             else if (MainMenu.algorithmName == "Brute-force")
             {
-                
+                algorithm.SetAlgorithm(new BruteforceAlgorithm());
             }
             else if (MainMenu.algorithmName == "Random checkpoints")
             {
-                
+                algorithm.SetAlgorithm(new RandomCheckpointsAlgorithm());
             }
 
             algorithm.FindTheShortest();
-
             totalDistance = ComputeDistance(Algorithm.finalShortest);
 
             watch.Stop();

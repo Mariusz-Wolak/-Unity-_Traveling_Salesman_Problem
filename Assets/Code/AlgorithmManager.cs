@@ -13,6 +13,7 @@ public class AlgorithmManager : MonoBehaviour
 
     public void FindTheShortest()
     {
+        Algorithm.finalShortest = new List<int>();
         _algorithm.FindTheShortest();
     }
 }

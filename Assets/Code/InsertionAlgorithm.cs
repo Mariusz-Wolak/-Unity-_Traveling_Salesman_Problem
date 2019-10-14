@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class InsertionAlgorithm : Algorithm
 {
-    List<int> remainingCheckpoints;
-    List<int> currentShortest;
-    List<int> currentLoopShortest;
-    int startIndex;
-
     public override void FindTheShortest()
     {
-        remainingCheckpoints = new List<int>();
-        currentShortest = new List<int>();
-        currentLoopShortest = new List<int>();
-        startIndex = 0;
+        List<int> remainingCheckpoints = new List<int>();
+        List<int> currentShortest = new List<int>();
+        List<int> currentLoopShortest = new List<int>();
+        int startIndex = 0;
 
         System.Random random = new System.Random();
 
@@ -22,8 +17,6 @@ public class InsertionAlgorithm : Algorithm
         {
             remainingCheckpoints.Add(i);
         }
-
-        finalShortest = new List<int>();
 
         finalShortest.Add(startIndex);
         finalShortest.Add(startIndex);
