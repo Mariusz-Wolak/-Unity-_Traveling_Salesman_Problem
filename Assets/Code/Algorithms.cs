@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Algorithms
+public abstract class Algorithm
 {
     public static List<int> finalShortest = new List<int>();
 

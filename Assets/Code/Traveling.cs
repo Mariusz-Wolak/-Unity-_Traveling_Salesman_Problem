@@ -100,7 +100,7 @@ public class Traveling : MonoBehaviour
         }
         else
         {
-            currentCheckpointIndex = Algorithms.finalShortest[_finalShortestIndexer];
+            currentCheckpointIndex = Algorithm.finalShortest[_finalShortestIndexer];
         }
     }
 }

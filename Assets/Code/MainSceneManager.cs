@@ -89,18 +89,18 @@ public class MainSceneManager : MonoBehaviour
 
             if (MainMenu.algorithmName == "Insertion")
             {
-                Algorithms.Insertion();
+                Algorithm.Insertion();
             }
             else if (MainMenu.algorithmName == "Brute-force")
             {
-                Algorithms.Bruteforce();
+                Algorithm.Bruteforce();
             }
             else if (MainMenu.algorithmName == "Random checkpoints")
             {
-                Algorithms.RandomCheckpoints();
+                Algorithm.RandomCheckpoints();
             }
 
-            totalDistance = ComputeDistance(Algorithms.finalShortest);
+            totalDistance = ComputeDistance(Algorithm.finalShortest);
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
